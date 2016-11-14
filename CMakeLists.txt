@@ -434,7 +434,12 @@ if (APPLE)
 endif (APPLE)
 if (enable-cuda)
   find_package(CUDA REQUIRED)
-  set(ROSE_BUILD_CUDA_LANGUAGE_SUPPORT 1)
+  if(CUDA_FOUND)
+    file(COPY "${CMAKE_SOURCE_DIR}/config/preinclude-cuda.h"
+              DESTINATION "${CMAKE_BINARY_DIR}/include-staging/cuda_HEADERS/")
+    set(BACKEND_CUDA_COMPILER_NAME_WITH_PATH "${CUDA_TOOLKIT_ROOT_DIR}/bin/nvcc")
+    set(ROSE_BUILD_CUDA_LANGUAGE_SUPPORT 1)
+  endif()
 endif()
 
 option(enable-java "Enable Java support in ROSE." ON)

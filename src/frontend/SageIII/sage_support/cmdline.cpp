@@ -7619,8 +7619,12 @@ SgFile::buildCompilerCommandLineOptions ( vector<string> & argv, int fileNameInd
     {
         compilerNameString[0] = BACKEND_X10_COMPILER_NAME_WITH_PATH;
     }
-    else if (get_Cuda_only() || get_OpenCL_only()) {
-        std::cerr << "[WARN] No backend compiler for CUDA and OpenCL." << std::endl;
+    else if (get_Cuda_only() == true)
+    {
+        compilerNameString[0] = BACKEND_CUDA_COMPILER_NAME_WITH_PATH;
+    }
+    else if (get_OpenCL_only()) {
+        std::cerr << "[WARN] No backend compiler for OpenCL." << std::endl;
     }
     else
     {
