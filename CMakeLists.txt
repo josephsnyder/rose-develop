@@ -452,6 +452,14 @@ endif()
 
 option(enable-opencl "Enable OpenCL support in ROSE." ON)
 if (enable-opencl)
+  file(COPY "${CMAKE_SOURCE_DIR}/config/preinclude-opencl.h"
+    DESTINATION "${CMAKE_BINARY_DIR}/include-staging/opencl_HEADERS/")
+  if(${CMAKE_VERSION} VERSION_GREATER 3.1)
+    find_package(OpenCL REQUIRED)
+    if(OpenCL_FOUND)
+      set(ROSE_BUILD_OPENCL_LANGUAGE_SUPPORT 1)
+    endif()
+  endif()
   set(ROSE_BUILD_OPENCL_LANGUAGE_SUPPORT 1)
   find_path(with-opencl-inc NAMES cl.h
     DOC "For OpenCL runtime library")
